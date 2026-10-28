@@ -1,0 +1,14 @@
+# PostgreSQL connection string, e.g. from a managed PostgreSQL provider
+DATABASE_URL="postgresql://jirani:change-me@localhost:5432/jirani_play?schema=public"
+
+# Generate a long random secret; never commit your real .env file
+SESSION_SECRET="replace-with-at-least-32-random-characters"
+
+# Bootstrap an initial admin account during seeding (change before use)
+SEED_ADMIN_EMAIL="admin@example.com"
+SEED_ADMIN_PASSWORD="replace-this-with-a-long-unique-password"
+
+# Optional in production; set to 1 behind a trusted HTTPS reverse proxy
+TRUST_PROXY="0"
+PORT="3000"
+NODE_ENV="development"
