@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ClubStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum UserRole {
+  ADMIN
+  REVIEWER
+}
+
+model Club {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  name        String
+  sport       String     @default("Football")
+  county      String
+  town        String
+  ageGroups   String
+  contactName String?
+  publicEmail String?
+  publicPhone String?
+  website     String?
+  description String
+  status      ClubStatus @default(PENDING)
+  featured    Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  reviewedAt  DateTime?
+  reviewedBy  String?
+  @@index([status, county])
+  @@index([status, createdAt])
+  @@index([name])
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(REVIEWER)
+  createdAt    DateTime @default(now())
+  lastLoginAt  DateTime?
+}
+
+model ClubEnquiry {
+  id          String   @id @default(cuid())
+  clubId      String
+  senderName  String
+  senderEmail String
+  message     String
+  createdAt   DateTime @default(now())
+  @@index([clubId, createdAt])
+}
